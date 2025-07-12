@@ -1,0 +1,8 @@
+{% extends "model.html"%}
+{% block content %}
+    {% if user.is_authenticated %}
+    <p class="logged-in-p">
+        Olá {{ user.first_name }} seja bem vindo(a), o que deseja fazer hoje?  
+    </p>
+    {% endif %}
+    {% endblock %}

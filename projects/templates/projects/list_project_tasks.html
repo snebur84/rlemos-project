@@ -1,0 +1,66 @@
+{% extends "model.html"%}
+
+{% block content %}
+    <h1>Projetos</h1>
+    <a href="{% url 'projects:create_task' %}">
+      <button type="button" class="btn btn-success" style="float: right; margin-bottom: 5px;">Adicionar</button>
+    </a>
+    <form>
+      <div class="form-group mb-1">
+        <input class="form-control" type="text" name="name" placeholder="Buscar por nome">
+      </div>
+      <button type="submit" class="btn btn-primary">Buscar</button>      
+    </form>
+    <table class="table table-bordered mt-1">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Projeto</th>
+            <th>Responsável</th>
+            <th>Estado</th>
+            <th>Data de Fim</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+              {% if forloop.counter0|divisibleby:2 %}
+                <tr class="table-light">
+              {% else %}
+                <tr class="table-secondary">
+              {% endif %}
+                <td>{{ task.id }}</td>
+                <td><a href="{{ task.get_absolute_url }}">{{ task.title }}</a></td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.project }}</td>
+                <td>{{ task.assigned_to }}</td>
+                <td>{{ task.status }}</td>
+                <td>{{ task.due_date }}</td>
+                <form method="post" action="{{ task.get_delete_url }}">
+                  {% csrf_token %}
+                  <td>
+                      <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta tarefa?');">
+                          Excluir
+                      </button>
+                  </td>
+              </form>
+              </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+      <ul class="pagination">
+          {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+          {% endif %}
+          {% for object in page_obj.paginator.page_range %}
+            <li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+          {% endfor %}
+          {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Próximo</a></li>
+          {% endif %}
+      </ul>
+
+{% endblock %}

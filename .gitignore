@@ -1,0 +1,8 @@
+# Arquivos de log e cache de Python
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+.Python
+venv/
+.venv/
