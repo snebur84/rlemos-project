@@ -146,10 +146,20 @@ class DeleteProjectMemberView(DeleteView):
         return reverse('projects:list_members')
 
 class ProjectViewSet(viewsets.ModelViewSet):
+    """
+    **GERENCIAMENTO DE PROJETOS**
+
+    Este endpoint permite o gerenciamento de projetos, incluindo a criação, leitura, atualização e exclusão de projetos.
+    Os projetos compõem a base central do sistema, permitindo a organização e acompanhamento de tarefas e membros associados.
+    """
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-   
+  
 class CustomAuthToken(ObtainAuthToken):
+    """
+    **AUTENTICAÇÃO DE USUÁRIO**
+    Este endpoint permite a autenticação de usuários via token.
+    """
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
                                            context={'request': request})

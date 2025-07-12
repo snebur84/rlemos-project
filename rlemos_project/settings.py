@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +81,26 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Rlemos Project API',
+    'DESCRIPTION': 'API for managing projects and tasks',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SCHEMA_PATH_PREFIX': '/api',
+    'SWAGGER_UI_SETTINGS': {
+        'deepLinking': True,
+        'filter': True,
+        'defaultRequestDuration': True,
+        'docExpansion': 'none',
+    },
+    'REDOC_SETTINGS': {
+        'hideDownloadButton': True,
+        'pathInMiddlePanel': True,
+    },
 }
 
 WSGI_APPLICATION = 'rlemos_project.wsgi.application'
